@@ -1,25 +1,19 @@
+import { useState } from "react";
+
 const App = () => {
-  return (
-    <div>
-      <h1>greetings, traveler!</h1>
-      <Hello name="Fred" age={24} />
-      <Hello name="Vilma" age={59} />
-    </div>
-  );
-};
+  let arr = ["hello ", "goodbye "];
+  const [comments, setComments] = useState(arr);
 
-const Hello = ({ name, age }) => {
-  console.log(name, age);
-  const bornYear = () => new Date().getFullYear() - age;
-  console.log(bornYear);
+  const addComment = () =>
+    setComments((comments) => [...comments, "another comment "]);
+  console.log("comments are", comments);
+  console.log("arr is", arr);
 
   return (
-    <div>
-      <p>
-        hello {name}, you are {age} years old
-      </p>
-      <p>so you were born in about {bornYear()}</p>
-    </div>
+    <>
+      <button onClick={addComment}>comment</button>
+      <p>{comments}</p>
+    </>
   );
 };
 
