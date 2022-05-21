@@ -1,23 +1,21 @@
 import { useState } from "react";
-let counter = 0;
 
 const App = () => {
   const Display = (props) => {
-    return <div>{props.counter}</div>;
+    return <div>Number of comments so far: {props.counter}</div>;
   };
 
   let arr = ["hello "];
   const [comments, setComments] = useState(arr);
   const addComment = () => {
-    counter++;
-    setComments((comments) => [...comments, "comment nr", counter]);
+    setComments((comments) => [...comments, " comment nr" + comments.length]);
   };
 
   return (
     <>
-      <button onClick={addComment}>comment</button>
       <ul>{comments}</ul>
-      <Display counter={counter} />
+      <Display counter={comments.length} />
+      <button onClick={addComment}>Add a comment</button>
     </>
   );
 };
