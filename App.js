@@ -11,6 +11,17 @@ const Display = ({ counter }) => (
   <div>Number of comments so far: {counter}</div>
 );
 
+const AllComments = ({ comments }) => {
+  console.log(comments);
+  return (
+    <>
+      {comments.map((r) => (
+        <li key={r.id}>{r.content}</li>
+      ))}
+    </>
+  );
+};
+
 const App = () => {
   const [comments, setComments] = useState([]);
   const p = new Comment(comments.length + 1, "new comment");
@@ -20,11 +31,7 @@ const App = () => {
   return (
     <>
       <h1>First post</h1>
-      <ul>
-        {comments.map((p) => (
-          <li key={p.id}>{p.content + " " + p.id}</li>
-        ))}
-      </ul>
+      <AllComments comments={comments} />
       <Display counter={comments.length} />
       <button onClick={addComment}>Add a comment</button>
     </>
