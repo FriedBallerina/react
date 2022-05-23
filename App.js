@@ -1,21 +1,14 @@
 import { useState } from "react";
 
-class Comment {
-  constructor(id, content) {
-    this.id = id;
-    this.content = content;
-  }
-}
-
 const Display = ({ counter }) => (
   <div>Number of comments so far: {counter}</div>
 );
 
-const AllComments = ({ comments }) => {
-  console.log(comments);
+const AllComments = ({ stuff }) => {
+  console.log(stuff);
   return (
     <>
-      {comments.map((r) => (
+      {stuff.map((r) => (
         <li key={r.id}>{r.content}</li>
       ))}
     </>
@@ -24,16 +17,33 @@ const AllComments = ({ comments }) => {
 
 const App = () => {
   const [comments, setComments] = useState([]);
-  const p = new Comment(comments.length + 1, "new comment");
-  const addComment = () => {
-    setComments((comments) => comments.concat(p));
+  const [newComment, setNewComment] = useState("a new");
+
+  const addComment = (event) => {
+    event.preventDefault();
+    const commentObject = {
+      content: newComment,
+      date: new Date().toISOString(),
+      important: Math.random() < 0.5,
+      id: comments.length + 1,
+    };
+    console.log("button clicked", event.target);
+    setComments((comments) => comments.concat(commentObject));
+  };
+
+  const handleCommentChange = (event) => {
+    console.log(event.target.value);
+    setNewComment(event.target.value);
   };
   return (
     <>
       <h1>First post</h1>
-      <AllComments comments={comments} />
+      <form onSubmit={addComment}>
+        <input value={newComment} onChange={handleCommentChange} />
+        <button type="submit">Add a comment</button>
+      </form>
+      <AllComments stuff={comments} />
       <Display counter={comments.length} />
-      <button onClick={addComment}>Add a comment</button>
     </>
   );
 };
